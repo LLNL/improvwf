@@ -1,0 +1,13 @@
+################################################################################
+# Copyright (c) 2018-2023, Lawrence Livermore National Security, LLC
+# See the top-level LICENSE and NOTICE files for details.
+#
+# SPDX-License-Identifier: MIT
+################################################################################
+description:
+    name: lulesh_sample_history
+    description: |
+        A sample (blank) history file for selection of entries using
+        the pop_in_random_order decision-maker.
+
+history: {}

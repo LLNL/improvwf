@@ -1,0 +1,80 @@
+################################################################################
+# Copyright (c) 2018-2023, Lawrence Livermore National Security, LLC
+# See the top-level LICENSE and NOTICE files for details.
+#
+# SPDX-License-Identifier: MIT
+################################################################################
+description:
+  name: hierarchical_sample1
+  description: A sample hierarchical improv workflow.  # How to handle hierarchical logging?
+
+env:
+  variables:
+    OUTPUT_PATH:  ./maestro_path  # The central workspace
+
+  labels:
+    # # SPECROOT is the directory in which this specification exists at invocation time.
+    # improv_history: $(SPECROOT)/global_history.yaml  # There is one, global history file
+    improv_workspace_root: worker_$(ID)_file_system
+    decision_study: $(SPECROOT)/decision_maker.yaml
+    decision_study_files: $(SPECROOT)/pop_in_random_order.py
+    study_yaml_directory: $(SPECROOT)/studies
+    per_worker_menu: $(SPECROOT)/$(MENU)
+
+#batch:
+#    type:  slurm
+#    queue: queue_name
+#    bank:  bank_name
+#    host:  hostname
+#    nodes: 1
+
+study:
+  - name: history-initialize
+    description: Initialize the global history file
+    run:
+      cmd:
+        cp $(SPECROOT)/global_history.yaml ./
+      depends: []
+
+  - name: prepare-workers
+    description: Prepare the yaml scripts for the worker processes
+    run:
+      cmd: |
+        # Below: improv prepare:
+        # - Ensures that the menu, template, and other files exist
+        # - Copies all appropriate files to the study "source" sub-directories
+        improv prepare $(decision_study) $(per_worker_menu) $(study_yaml_directory) -i $(ID) -o . -Df="$(decision_study_files)"
+        # Note: Unless nodes or procs is specified here, the step will execute locally.
+      depends: []
+
+  - name: child-improv
+    description: The distributed workers of the master process
+    run:
+      # Execute remotely via the improv run daemon if batch uncommented above and nodes and procs uncommented below.
+      cmd: |
+        # Improv run checks for study specifications in its private "inbox;"
+        # if one is found, it launches a local maestro process to execute the
+        # study via a FOREGROUND conductor.
+        # The launched study is then moved to the outbox
+        cd $(SPECROOT)
+        cd ../ # Assumes we want to create a local directory at the same level as SPECROOT for the workers
+        mkdir $(improv_workspace_root)
+        cd $(improv_workspace_root)
+        improv -d 1 run . $(prepare-workers.workspace)/source -H $(history-initialize.workspace)/global_history.yaml -s 2 -m="-s 1"
+#      nodes : $(NODES)
+#      walltime : $(WALLTIME)
+      depends: [history-initialize, prepare-workers]  # Depends only on the prepare-workers step with a matching set of parameters.
+
+global.parameters:
+  MENU:
+    values : [lulesh_small.yaml, lulesh_medium.yaml, lulesh_large.yaml]
+    label  : MENU.%%
+  NODES:
+    values : [1, 2, 3]
+    label  : NODES.%%
+  WALLTIME:
+    values : ['00:15:00', '00:30:00', '01:00:00']
+    label  : WALLTIME.%%
+  ID:
+    values : [000, 001, 002]
+    label  : ID.%%

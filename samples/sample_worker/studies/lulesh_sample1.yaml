@@ -1,0 +1,96 @@
+################################################################################
+# Copyright (c) 2018-2023, Lawrence Livermore National Security, LLC
+# See the top-level LICENSE and NOTICE files for details.
+#
+# SPDX-License-Identifier: MIT
+################################################################################
+
+description:
+    name: lulesh_sample_energy
+    description: A sample LULESH study that downloads, builds, and runs a parameter study of varying problem sizes and iterations.
+
+env:
+    variables:
+        OUTPUT_PATH: ./sample_output/lulesh
+        # MWF_HISTORY: substudy_history.yaml
+        # MWF_MENU: lulesh_menu.yaml
+        # MWF_REGISTRY: ./.registry
+
+    labels:
+        outfile: $(SIZE.label).$(ITERATIONS.label).log
+        resultsfile: results.yaml
+
+    dependencies:
+      git:
+        - name: LULESH
+          path: $(OUTPUT_PATH)
+          url: https://github.com/LLNL/LULESH.git
+
+study:
+    - name: make-lulesh
+      description: Build the serial version of LULESH.
+      run:
+          cmd: |
+            cd $(LULESH)
+            if [[ $OSTYPE == darwin* ]]; then
+              sed -i "" 's/^CXX = $(MPICXX)/CXX = $(SERCXX)/' ./Makefile
+              sed -i "" 's/^CXXFLAGS = -g -O3 -fopenmp/#CXXFLAGS = -g -O3 -fopenmp/' ./Makefile
+              sed -i "" 's/^#LDFLAGS = -g -O3/LDFLAGS = -g -O3/' ./Makefile
+              sed -i "" 's/^LDFLAGS = -g -O3 -fopenmp/#LDFLAGS = -g -O3 -fopenmp/' ./Makefile
+              sed -i "" 's/^#CXXFLAGS = -g -O3 -I/CXXFLAGS = -g -O3 -I/' ./Makefile
+            else
+              sed -i 's/^CXX = $(MPICXX)/CXX = $(SERCXX)/' ./Makefile
+              sed -i 's/^CXXFLAGS = -g -O3 -fopenmp/#CXXFLAGS = -g -O3 -fopenmp/' ./Makefile
+              sed -i 's/^#LDFLAGS = -g -O3/LDFLAGS = -g -O3/' ./Makefile
+              sed -i 's/^LDFLAGS = -g -O3 -fopenmp/#LDFLAGS = -g -O3 -fopenmp/' ./Makefile
+              sed -i 's/^#CXXFLAGS = -g -O3 -I/CXXFLAGS = -g -O3 -I/' ./Makefile
+            fi
+            make clean
+            make
+          depends: []
+
+    - name: run-lulesh
+      description: Run LULESH.
+      run:
+          cmd: |
+            $(LULESH)/lulesh2.0 -s $(SIZE) -i $(ITERATIONS) -p > $(outfile)
+          depends: [make-lulesh]
+
+    - name: post-process-lulesh
+      description: Post process all LULESH results.
+      run:
+          cmd: |
+            echo "Unparameterized step with Parameter Independent dependencies." >> out.log
+            echo $(run-lulesh.workspace) > out.log
+            ls $(run-lulesh.workspace) > ls.log
+          depends: [run-lulesh_*]
+
+    - name: post-process-lulesh-trials
+      description: Post process all LULESH results.
+      run:
+          cmd: |
+            echo "Parameterized step that has Parameter Independent dependencies" >> out.log
+            echo $(run-lulesh.workspace) >> out.log
+            ls $(run-lulesh.workspace) > out.log
+          depends: [run-lulesh_*]
+
+    - name: post-process-lulesh-size
+      description: Post process all LULESH results.
+      run:
+          cmd: |
+            echo "Parameterized step that has Parameter Independent dependencies" >> out.log
+            echo "SIZE = $(SIZE)" >> out.log
+            echo $(run-lulesh.workspace) >> out.log
+            ls $(run-lulesh.workspace) | grep $(SIZE.label) >> out.log
+          depends: [run-lulesh_*]
+
+    - name: yield-results-string
+      description: Produce the string of results for the lulesh_sample1 calculations.
+      run:
+          cmd: |
+            echo "Producing the results string for history logging." >> out.log
+            # For each file, read the "Final Origin Energy" value from the SIZE.%%.ITER%%.log file
+            echo "energy:" | tr "\n" " " > $(resultsfile)
+            grep "Final Origin Energy = " $(run-lulesh.workspace)/*/*.log | grep -v alias  | grep -oE "[\d.+-e]*\s*$" | tr '\n' ' ' >> $(resultsfile)
+            mv $(resultsfile) $(OUTPUT_PATH)
+          depends: [run-lulesh_*]

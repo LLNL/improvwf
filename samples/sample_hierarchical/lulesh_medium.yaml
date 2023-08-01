@@ -1,0 +1,30 @@
+################################################################################
+# Copyright (c) 2018-2023, Lawrence Livermore National Security, LLC
+# See the top-level LICENSE and NOTICE files for details.
+#
+# SPDX-License-Identifier: MIT
+################################################################################
+
+description:
+  name: lulesh_medium
+  description: |
+    A demonstration of a menu of "sub-studies" which could be applied
+    to a lulesh base study and tested.
+
+studies:
+  - study_type: lulesh_sample_energy
+    study_parameters:
+        SIZE:
+            values : [30, 40]
+            label  : SIZE.%%
+        ITERATIONS:
+            values : [30, 40]
+            label  : ITERATIONS.%%
+  - study_type: lulesh_sample_run_time
+    study_parameters:
+        SIZE:
+            values : [30, 40]
+            label  : SIZE.%%
+        ITERATIONS:
+            values : [30, 40]
+            label  : ITERATIONS.%%

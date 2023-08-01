@@ -1,0 +1,2 @@
+Sina installation is on GitHub
+https://github.com/LLNL/Sina

@@ -1,0 +1,138 @@
+description: {description: 'Improv sample antibody sequences. Source: Computationally restoring the potency of a clinical antibody against SARS-CoV-2 Omicron subvariants, by Desautels et al', name: improv_sample}
+history: 
+  request_233344_987516:
+    request_id: request_233344_987516
+    result:
+      AntigenDescription:
+      - 'md5_3052c528d578179c00211647380e5fb7 Mutant_number: md5_3052c528d578179c00211647380e5fb7
+        Master: RBD_2130_FAB Mutations: G112E,S162A,S163A,T189E'
+      AntigenID:
+      - md5_3052c528d578179c00211647380e5fb7
+      AntigenSequence:
+      - EVQLVESGGGLVKPGGSLRLSCAASGFTFRDVWMSWVRQAPGKGLEWVGRIKSKIDGGTTDYAAPVKGRFTISRDDSKNTLYLQMNSLKTEDTAVYYCTTAGSYYYDTVGPELPEGKFDYWGQGTLVTVSDIVMTQSPDSLAVSLGERATINCKSSQSVLYAANNKNYLAWYQQKPGQPPKLLMYWASERESGVPDRFSGSGSGAEFTLTISSLQAEDVAIYYCQQYYSTLTFGGGTKVEIK
+      MasterAntigenDescription:
+      - RBD_2130_FAB
+      MasterAntigenID:
+      - RBD_2130_FAB
+      MasterAntigenSequence:
+      - EVQLVESGGGLVKPGGSLRLSCAASGFTFRDVWMSWVRQAPGKGLEWVGRIKSKIDGGTTDYAAPVKGRFTISRDDSKNTLYLQMNSLKTEDTAVYYCTTAGSYYYDTVGPGLPEGKFDYWGQGTLVTVSDIVMTQSPDSLAVSLGERATINCKSSQSVLYSSNNKNYLAWYQQKPGQPPKLLMYWASTRESGVPDRFSGSGSGAEFTLTISSLQAEDVAIYYCQQYYSTLTFGGGTKVEIK
+      RosettaFlexDDGAvg:
+      - -3.542
+      RosettaFlexDDGMax:
+      - -2.069
+      RosettaFlexDDGMin:
+      - -4.918
+      StructureHash:
+      - - bbd0a238a496f71f92164207469fdb87
+        - MD5_ALL
+      StructurePath:
+      - SARS2_WT.7t9k_2130_AZD1061.A_MN.R0024_OmicronR_trimHL.pdb.final.pdb
+    status: FINISHED
+    study_parameters:
+      ANTIGEN_CHAINS_IN_STRUCT:
+        label:
+        - ANTIGEN_CHAINS_IN_STRUCT.1
+        values:
+        - A
+      ANTIGEN_FASTA_HASH:
+        label:
+        - ANTIGEN_FASTA_HASH.1
+        values:
+        - - 07f060af48f7db4b1aa6828475fcd37c
+          - MD5
+      ANTIGEN_FASTA_PATH:
+        label:
+        - ANTIGEN_FASTA_PATH.1
+        values:
+        - mutants_request_233344_987516.fasta
+      MASTER_ANTIGEN_FASTA_HASH:
+        label:
+        - MASTER_ANTIGEN_FASTA_HASH.1
+        values:
+        - - dfb4ec6fb3ee8f812e3d8e075be074d1
+          - MD5
+      MASTER_ANTIGEN_FASTA_PATH:
+        label:
+        - MASTER_ANTIGEN_FASTA_PATH.1
+        values:
+        - RBD_2130_FAB.fasta
+      STRUCTURE_HASH:
+        label:
+        - STRUCTURE_HASH.1
+        values:
+        - - bbd0a238a496f71f92164207469fdb87
+          - MD5_ALL
+      STRUCTURE_PATH:
+        label:
+        - STRUCTURE_PATH.1
+        values:
+        - SARS2_WT.7t9k_2130_AZD1061.A_MN.R0024_OmicronR_trimHL.pdb.final.pdb
+    study_type: rosetta_listed_mutants_fl
+  request_044317_800479:
+    request_id: request_044317_800479
+    result:
+      AntigenDescription:
+      - 'md5_d323d72bb6bc337ea256bdd92ceba08e Mutant_number: md5_d323d72bb6bc337ea256bdd92ceba08e
+        Master: RBD_2130_FAB Mutations: V109R'
+      AntigenID:
+      - md5_d323d72bb6bc337ea256bdd92ceba08e
+      AntigenSequence:
+      - EVQLVESGGGLVKPGGSLRLSCAASGFTFRDVWMSWVRQAPGKGLEWVGRIKSKIDGGTTDYAAPVKGRFTISRDDSKNTLYLQMNSLKTEDTAVYYCTTAGSYYYDTRGPGLPEGKFDYWGQGTLVTVSDIVMTQSPDSLAVSLGERATINCKSSQSVLYSSNNKNYLAWYQQKPGQPPKLLMYWASTRESGVPDRFSGSGSGAEFTLTISSLQAEDVAIYYCQQYYSTLTFGGGTKVEIK
+      MasterAntigenDescription:
+      - RBD_2130_FAB
+      MasterAntigenID:
+      - RBD_2130_FAB
+      MasterAntigenSequence:
+      - EVQLVESGGGLVKPGGSLRLSCAASGFTFRDVWMSWVRQAPGKGLEWVGRIKSKIDGGTTDYAAPVKGRFTISRDDSKNTLYLQMNSLKTEDTAVYYCTTAGSYYYDTVGPGLPEGKFDYWGQGTLVTVSDIVMTQSPDSLAVSLGERATINCKSSQSVLYSSNNKNYLAWYQQKPGQPPKLLMYWASTRESGVPDRFSGSGSGAEFTLTISSLQAEDVAIYYCQQYYSTLTFGGGTKVEIK
+      RosettaFlexDDGAvg:
+      - -0.215
+      RosettaFlexDDGMax:
+      - -0.105
+      RosettaFlexDDGMin:
+      - -0.37200000000000005
+      StructureHash:
+      - - bbd0a238a496f71f92164207469fdb87
+        - MD5_ALL
+      StructurePath:
+      - SARS2_WT.7t9k_2130_AZD1061.A_MN.R0024_OmicronR_trimHL.pdb.final.pdb
+    status: FINISHED
+    study_parameters:
+      ANTIGEN_CHAINS_IN_STRUCT:
+        label:
+        - ANTIGEN_CHAINS_IN_STRUCT.1
+        values:
+        - A
+      ANTIGEN_FASTA_HASH:
+        label:
+        - ANTIGEN_FASTA_HASH.1
+        values:
+        - - 7bff61d63aabd334cdc2c11ecaa08ac2
+          - MD5
+      ANTIGEN_FASTA_PATH:
+        label:
+        - ANTIGEN_FASTA_PATH.1
+        values:
+        - mutants_request_044317_800479.fasta
+      MASTER_ANTIGEN_FASTA_HASH:
+        label:
+        - MASTER_ANTIGEN_FASTA_HASH.1
+        values:
+        - - dfb4ec6fb3ee8f812e3d8e075be074d1
+          - MD5
+      MASTER_ANTIGEN_FASTA_PATH:
+        label:
+        - MASTER_ANTIGEN_FASTA_PATH.1
+        values:
+        - RBD_2130_FAB.fasta
+      STRUCTURE_HASH:
+        label:
+        - STRUCTURE_HASH.1
+        values:
+        - - bbd0a238a496f71f92164207469fdb87
+          - MD5_ALL
+      STRUCTURE_PATH:
+        label:
+        - STRUCTURE_PATH.1
+        values:
+        - SARS2_WT.7t9k_2130_AZD1061.A_MN.R0024_OmicronR_trimHL.pdb.final.pdb
+    study_type: rosetta_listed_mutants_fl

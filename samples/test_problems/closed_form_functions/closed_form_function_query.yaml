@@ -1,0 +1,33 @@
+################################################################################
+# Copyright (c) 2018-2023, Lawrence Livermore National Security, LLC
+# See the top-level LICENSE and NOTICE files for details.
+#
+# SPDX-License-Identifier: MIT
+################################################################################
+
+description:
+  name: closed_form_function_query
+  description: A query to a python-implemented closed-form function
+
+env:
+  variables:
+    OUTPUT_PATH: ./sample_output/closed_form_function
+
+  labels:
+    resultsfile: results.yaml
+    function: $(IMPROV_STUDY_FILE_DIR)/closed_form_function.py  # The function name here must be substituted; Improv handles the path below.
+    x: "$(X)"  # This needs to be altered to take the parameters of the inputs
+    z: "$(Z)"
+
+  dependencies:
+    paths:
+      - name: IMPROV_STUDY_FILE_DIR
+        path: ./studies/study_files # Improv handles substitution here in improv run (via prepare_pull).
+
+study:
+  - name: evaluate-closed-form-function
+    description: Call the Python function and write the results to resultsfile
+    run:
+      cmd: |
+        python $(function) $(x) $(z) $(OUTPUT_PATH)/$(resultsfile)
+      depends: []

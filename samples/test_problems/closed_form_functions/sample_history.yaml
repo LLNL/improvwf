@@ -1,0 +1,13 @@
+################################################################################
+# Copyright (c) 2018-2023, Lawrence Livermore National Security, LLC
+# See the top-level LICENSE and NOTICE files for details.
+#
+# SPDX-License-Identifier: MIT
+################################################################################
+
+description:
+    name: sample_history
+    description: |
+        A sample (blank) history file for closed_form_function_evaluation test problems.
+
+history: {}

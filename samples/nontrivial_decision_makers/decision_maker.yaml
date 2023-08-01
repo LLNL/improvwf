@@ -1,0 +1,37 @@
+################################################################################
+# Copyright (c) 2018-2023, Lawrence Livermore National Security, LLC
+# See the top-level LICENSE and NOTICE files for details.
+#
+# SPDX-License-Identifier: MIT
+################################################################################
+
+description:
+    name: dmaker_rf_eps_greedy
+    description: An example of how an improv decision-maker study could be written to use a non-trivial decision-maker
+    run_descriptors: {study_type: decision_maker_001}  # If this study had any other run_descriptors, they would appear here.
+
+env:
+    variables:
+        OUTPUT_PATH: /dev/null
+
+    dependencies:
+      paths:
+        - name: IMPROV_MENU
+          path: /dev/null
+        - name: IMPROV_STUDIES
+          path: /dev/null
+        - name: IMPROV_INBOX
+          path: /dev/null
+        - name: IMPROV_DECISION_MAKER_ROOT
+          path: /dev/null
+        - name: IMPROV_HISTORY
+          path: /dev/null
+
+study:
+    - name: make-decision
+      description: Call the sample_decisionmaker.
+      run:
+          cmd: |
+            python $(IMPROV_DECISION_MAKER_ROOT)/decision_study_files/random_forest_eps_greedy.py $(IMPROV_HISTORY) $(IMPROV_MENU) $(IMPROV_STUDIES) $(IMPROV_INBOX)
+            touch $(OUTPUT_PATH)/results.yaml
+          depends: []
